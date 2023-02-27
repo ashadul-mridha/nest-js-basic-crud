@@ -6,7 +6,7 @@ export class UserController {
   getuser() {
     return {
       status: true,
-      message: "user data found",
+      message: "user data found"
     };
   }
 }
