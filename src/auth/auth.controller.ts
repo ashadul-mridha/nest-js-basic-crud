@@ -1,27 +1,12 @@
-import { Body, Controller, Post, UnauthorizedException } from "@nestjs/common";
-import { UserService } from "src/user/user.service";
+import { Body, Controller, Post } from "@nestjs/common";
+import { AuthService } from "./auth.service";
 import { LoginDto } from "./login.dto";
 
 @Controller("auth")
 export class AuthController {
-  constructor(private userService: UserService) {}
+  constructor(private authService: AuthService) {}
   @Post("/login")
-  async login(@Body() body: LoginDto) {
-    const user = await this.userService.findOneByEmail(body.email);
-    if (user) {
-      if (user.password === body.password) {
-        return "User Login Successfull";
-      } else {
-        throw new UnauthorizedException("Pass Not Match", {
-          cause: new Error(),
-          description: "Some error happend"
-        });
-      }
-    } else {
-      throw new UnauthorizedException("Email Not Match", {
-        cause: new Error(),
-        description: "Some error happend"
-      });
-    }
+  login(@Body() body: LoginDto) {
+    return this.authService.validateUser(body.email, body.password);
   }
 }
