@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { User } from "./user/user.entity";
 import { UserModule } from "./user/user.module";
 
 @Module({
@@ -7,12 +8,12 @@ import { UserModule } from "./user/user.module";
     UserModule,
     TypeOrmModule.forRoot({
       type: "mysql",
-      host: "127.0.01",
+      host: "127.0.0.1",
       port: 3306,
       username: "root",
       password: "",
       database: "nest_crud",
-      entities: [],
+      entities: [User],
       synchronize: true
     })
   ]
